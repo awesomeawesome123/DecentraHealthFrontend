@@ -3,6 +3,7 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Web3Provider } from "./contexts/Web3Context";
 import MainLayout from "./components/layout/MainLayout";
 import Dashboard from "./pages/Dashboard";
 import MedicalData from "./pages/MedicalData";
@@ -14,18 +15,20 @@ const queryClient = new QueryClient();
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
-      <Toaster />
-      <Sonner />
-      <BrowserRouter>
-        <MainLayout>
-          <Routes>
-            <Route path="/" element={<Dashboard />} />
-            <Route path="/medical-data" element={<MedicalData />} />
-            <Route path="/access-control" element={<AccessControl />} />
-            <Route path="/history" element={<History />} />
-          </Routes>
-        </MainLayout>
-      </BrowserRouter>
+      <Web3Provider>
+        <Toaster />
+        <Sonner />
+        <BrowserRouter>
+          <MainLayout>
+            <Routes>
+              <Route path="/" element={<Dashboard />} />
+              <Route path="/medical-data" element={<MedicalData />} />
+              <Route path="/access-control" element={<AccessControl />} />
+              <Route path="/history" element={<History />} />
+            </Routes>
+          </MainLayout>
+        </BrowserRouter>
+      </Web3Provider>
     </TooltipProvider>
   </QueryClientProvider>
 );

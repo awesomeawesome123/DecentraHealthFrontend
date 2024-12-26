@@ -1,6 +1,8 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { LucideIcon, Home, FileText, Shield, History } from 'lucide-react';
+import { LucideIcon, Home, FileText, Shield, History, Wallet } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { useWeb3 } from '@/contexts/Web3Context';
 
 interface NavItem {
   icon: LucideIcon;
@@ -17,6 +19,7 @@ const navItems: NavItem[] = [
 
 const MainLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const location = useLocation();
+  const { isConnected, account, connect, disconnect } = useWeb3();
 
   return (
     <div className="flex min-h-screen bg-background">
@@ -45,6 +48,17 @@ const MainLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
             );
           })}
         </nav>
+
+        <div className="px-6 mt-4">
+          <Button
+            onClick={isConnected ? disconnect : connect}
+            className="w-full flex items-center justify-center"
+            variant={isConnected ? "outline" : "default"}
+          >
+            <Wallet className="w-4 h-4 mr-2" />
+            {isConnected ? `${account?.slice(0, 6)}...${account?.slice(-4)}` : 'Connect Wallet'}
+          </Button>
+        </div>
       </aside>
 
       {/* Main Content */}
