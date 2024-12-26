@@ -2,8 +2,33 @@ import React from 'react';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Upload, Lock } from 'lucide-react';
+import { useToast } from '@/components/ui/use-toast';
 
 const MedicalData = () => {
+  const { toast } = useToast();
+
+  const handleUploadClick = () => {
+    // In a real implementation, this would open a file picker
+    toast({
+      title: "Upload Feature",
+      description: "File upload functionality will be implemented in the next phase",
+    });
+  };
+
+  const handleViewSummary = () => {
+    toast({
+      title: "View Summary",
+      description: "Summary view will be available once AI processing is implemented",
+    });
+  };
+
+  const handleManageAccess = () => {
+    toast({
+      title: "Access Management",
+      description: "Access control features will be implemented in the next phase",
+    });
+  };
+
   return (
     <div className="space-y-8 animate-fade-in">
       <div className="flex justify-between items-center">
@@ -11,7 +36,7 @@ const MedicalData = () => {
           <h2 className="text-2xl font-semibold tracking-tight">Medical Data</h2>
           <p className="text-muted-foreground">Upload and manage your medical records</p>
         </div>
-        <Button className="button-primary">
+        <Button className="button-primary" onClick={handleUploadClick}>
           <Upload className="w-4 h-4 mr-2" />
           Upload New
         </Button>
@@ -30,8 +55,8 @@ const MedicalData = () => {
               </div>
             </div>
             <div className="flex space-x-2">
-              <Button variant="outline">View Summary</Button>
-              <Button variant="outline">Manage Access</Button>
+              <Button variant="outline" onClick={handleViewSummary}>View Summary</Button>
+              <Button variant="outline" onClick={handleManageAccess}>Manage Access</Button>
             </div>
           </div>
         </Card>
