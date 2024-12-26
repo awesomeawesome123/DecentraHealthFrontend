@@ -62,24 +62,27 @@ export const Web3Provider = ({ children }: { children: React.ReactNode }) => {
   };
 
   useEffect(() => {
-    // Handle account changes
-    if (window.ethereum) {
-      window.ethereum.on('accountsChanged', (accounts: string[]) => {
-        if (accounts.length === 0) {
-          disconnect();
-        } else {
-          setAccount(accounts[0]);
-        }
-      });
+    const handleAccountsChanged = (accounts: string[]) => {
+      if (accounts.length === 0) {
+        disconnect();
+      } else {
+        setAccount(accounts[0]);
+      }
+    };
 
-      window.ethereum.on('chainChanged', () => {
-        window.location.reload();
-      });
+    const handleChainChanged = () => {
+      window.location.reload();
+    };
+
+    if (window.ethereum) {
+      window.ethereum.on('accountsChanged', handleAccountsChanged);
+      window.ethereum.on('chainChanged', handleChainChanged);
     }
 
     return () => {
       if (window.ethereum) {
-        window.ethereum.removeAllListeners();
+        window.ethereum.removeListener('accountsChanged', handleAccountsChanged);
+        window.ethereum.removeListener('chainChanged', handleChainChanged);
       }
     };
   }, []);
