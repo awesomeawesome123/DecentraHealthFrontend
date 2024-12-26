@@ -1,9 +1,12 @@
-import React from 'react';
+import { useState } from 'react';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { UserPlus, Shield, Users } from 'lucide-react';
+import { AccessControlDialog } from '@/components/AccessControlDialog';
 
 const AccessControl = () => {
+  const [dialogOpen, setDialogOpen] = useState(false);
+
   return (
     <div className="space-y-8 animate-fade-in">
       <div className="flex justify-between items-center">
@@ -11,7 +14,7 @@ const AccessControl = () => {
           <h2 className="text-2xl font-semibold tracking-tight">Access Control</h2>
           <p className="text-muted-foreground">Manage permissions for your medical data</p>
         </div>
-        <Button className="button-primary">
+        <Button className="button-primary" onClick={() => setDialogOpen(true)}>
           <UserPlus className="w-4 h-4 mr-2" />
           Grant Access
         </Button>
@@ -35,6 +38,11 @@ const AccessControl = () => {
           </div>
         </Card>
       </div>
+
+      <AccessControlDialog 
+        open={dialogOpen}
+        onOpenChange={setDialogOpen}
+      />
     </div>
   );
 };
